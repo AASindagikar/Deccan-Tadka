@@ -8,6 +8,8 @@ export const Home = () => {
   const { state } = useCMS();
   const featuredProducts = state.products.filter(p => p.isFeatured);
 
+  const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&q=80&w=1000';
+
   return (
     <div className="space-y-20 pb-20">
       {/* Hero Section */}
@@ -59,17 +61,17 @@ export const Home = () => {
             </a>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="group p-8 rounded-[2rem] bg-red-50 hover:bg-red-700 hover:text-white transition-all duration-500 cursor-pointer" onClick={(e) => { e.preventDefault(); window.location.hash = '#/blog'; }}>
+            <div className="group p-8 rounded-[2rem] bg-red-50 hover:bg-red-700 hover:text-white transition-all duration-500 cursor-pointer" onClick={(e) => { e.preventDefault(); window.location.hash = '#/blog'; window.scrollTo(0,0); }}>
               <HeartPulse size={40} className="text-red-700 group-hover:text-white mb-6 transition-colors" />
               <h4 className="text-xl font-bold mb-3">Anti-Inflammatory</h4>
               <p className="text-stone-600 group-hover:text-red-50 text-sm leading-relaxed">Turmeric and Black Pepper work together to reduce chronic inflammation naturally.</p>
             </div>
-            <div className="group p-8 rounded-[2rem] bg-amber-50 hover:bg-amber-600 hover:text-white transition-all duration-500 cursor-pointer" onClick={(e) => { e.preventDefault(); window.location.hash = '#/blog'; }}>
+            <div className="group p-8 rounded-[2rem] bg-amber-50 hover:bg-amber-600 hover:text-white transition-all duration-500 cursor-pointer" onClick={(e) => { e.preventDefault(); window.location.hash = '#/blog'; window.scrollTo(0,0); }}>
               <Zap size={40} className="text-amber-600 group-hover:text-white mb-6 transition-colors" />
               <h4 className="text-xl font-bold mb-3">Metabolism Boost</h4>
               <p className="text-stone-600 group-hover:text-amber-50 text-sm leading-relaxed">Cumin seeds accelerate digestion and improve your body's nutrient absorption rate.</p>
             </div>
-            <div className="group p-8 rounded-[2rem] bg-stone-100 hover:bg-stone-900 hover:text-white transition-all duration-500 cursor-pointer" onClick={(e) => { e.preventDefault(); window.location.hash = '#/blog'; }}>
+            <div className="group p-8 rounded-[2rem] bg-stone-100 hover:bg-stone-900 hover:text-white transition-all duration-500 cursor-pointer" onClick={(e) => { e.preventDefault(); window.location.hash = '#/blog'; window.scrollTo(0,0); }}>
               <Brain size={40} className="text-stone-700 group-hover:text-white mb-6 transition-colors" />
               <h4 className="text-xl font-bold mb-3">Cognitive Health</h4>
               <p className="text-stone-600 group-hover:text-stone-200 text-sm leading-relaxed">Antioxidants in whole spices protect your brain cells from daily oxidative stress.</p>
@@ -86,25 +88,34 @@ export const Home = () => {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {featuredProducts.map(product => (
-            <div key={product.id} className="group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300">
-              <div className="h-64 overflow-hidden">
-                <img src={product.image} alt={product.name} className="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
+            <div 
+              key={product.id} 
+              className="group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 cursor-pointer"
+              onClick={(e) => {
+                e.preventDefault();
+                window.location.hash = '#/products';
+                window.scrollTo(0, 0);
+              }}
+            >
+              <div className="h-64 overflow-hidden bg-stone-100">
+                <img 
+                  src={product.image} 
+                  alt={product.name} 
+                  className="w-full h-full object-cover group-hover:scale-110 transition duration-500" 
+                  onError={(e) => { (e.target as HTMLImageElement).src = FALLBACK_IMAGE; }}
+                />
               </div>
               <div className="p-6">
                 <span className="text-xs font-bold text-red-700 uppercase tracking-widest">{product.type}</span>
-                <h3 className="text-xl font-bold text-stone-900 mt-2 mb-3">{product.name}</h3>
+                <h3 className="text-xl font-bold text-stone-900 mt-2 mb-3 group-hover:text-red-700 transition-colors">{product.name}</h3>
                 <p className="text-stone-600 text-sm mb-6 line-clamp-2">{product.description}</p>
                 <div className="flex items-center justify-between">
                   <div className="flex flex-wrap gap-1">
                     {product.sizes.map(s => <span key={s} className="px-2 py-1 bg-stone-100 text-[10px] font-semibold text-stone-500 rounded">{s}</span>)}
                   </div>
-                  <a 
-                    href={`#/products`} 
-                    onClick={(e) => handleNavigate(e, '#/products')}
-                    className="text-red-700 font-bold text-sm flex items-center gap-1 hover:gap-2 transition-all"
-                  >
+                  <div className="text-red-700 font-bold text-sm flex items-center gap-1 group-hover:gap-2 transition-all">
                     Details <ArrowRight size={16} />
-                  </a>
+                  </div>
                 </div>
               </div>
             </div>

@@ -17,7 +17,8 @@ import {
   Clock,
   User,
   Phone,
-  Eye
+  Eye,
+  ShoppingBag
 } from 'lucide-react';
 import { Product, BlogPost, Enquiry } from '../types';
 
@@ -101,124 +102,60 @@ export const AdminDashboard = () => {
           </div>
         )}
 
-        {activeTab === 'blogs' && !editingBlog && (
-          <div className="space-y-6">
-            <div className="flex justify-between items-center">
-              <h2 className="text-3xl font-bold text-gray-800">Blog Engine</h2>
-              <button 
-                onClick={() => setEditingBlog({ id: 'new', title: '', slug: '', excerpt: '', content: '', image: '', date: '', author: 'Admin', category: 'Health', status: 'Draft' })}
-                className="bg-amber-600 text-white px-6 py-2 rounded-lg font-bold flex items-center gap-2"
-              >
-                <Plus size={20} /> Write Article
-              </button>
-            </div>
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
-              <table className="w-full text-left">
-                <thead className="bg-gray-50"><tr><th className="px-6 py-4">Title</th><th className="px-6 py-4">Category</th><th className="px-6 py-4">Status</th><th className="px-6 py-4 text-right">Actions</th></tr></thead>
-                <tbody className="divide-y divide-gray-100">
-                  {state.blogs.map(post => (
-                    <tr key={post.id}>
-                      <td className="px-6 py-4"><span className="font-bold">{post.title}</span></td>
-                      <td className="px-6 py-4"><span className="px-2 py-1 bg-gray-100 rounded text-xs uppercase font-bold">{post.category}</span></td>
-                      <td className="px-6 py-4"><span className={`px-2 py-1 rounded text-xs font-bold ${post.status === 'Published' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'}`}>{post.status}</span></td>
-                      <td className="px-6 py-4 text-right space-x-2">
-                        <button onClick={() => setEditingBlog(post)} className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg"><Edit3 size={18} /></button>
-                        <button onClick={() => deleteBlog(post.id)} className="p-2 text-red-600 hover:bg-red-50 rounded-lg"><Trash2 size={18} /></button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        )}
-
-        {activeTab === 'blogs' && editingBlog && (
-          <div className="max-w-5xl bg-white p-10 rounded-3xl shadow-xl">
-             <h3 className="text-2xl font-bold mb-8">Article Editor</h3>
-             <form onSubmit={saveBlog} className="space-y-6">
-               <div className="grid grid-cols-2 gap-6">
-                 <div>
-                   <label className="block text-sm font-bold mb-2">Title</label>
-                   <input required type="text" className="w-full p-3 border rounded-xl" value={editingBlog.title} onChange={e => setEditingBlog({...editingBlog, title: e.target.value})} />
-                 </div>
-                 <div>
-                   <label className="block text-sm font-bold mb-2">Category</label>
-                   <select className="w-full p-3 border rounded-xl" value={editingBlog.category} onChange={e => setEditingBlog({...editingBlog, category: e.target.value})}>
-                     <option>Health</option><option>Wellness</option><option>Culinary</option><option>Heritage</option>
-                   </select>
-                 </div>
-               </div>
-               <div>
-                 <label className="block text-sm font-bold mb-2">Excerpt</label>
-                 <textarea className="w-full p-3 border rounded-xl h-20" value={editingBlog.excerpt} onChange={e => setEditingBlog({...editingBlog, excerpt: e.target.value})} />
-               </div>
-               <div>
-                 <label className="block text-sm font-bold mb-2">Full Content</label>
-                 <textarea className="w-full p-3 border rounded-xl h-64" value={editingBlog.content} onChange={e => setEditingBlog({...editingBlog, content: e.target.value})} />
-               </div>
-               <div className="flex gap-4">
-                 <div className="flex-grow">
-                   <label className="block text-sm font-bold mb-2">Image URL</label>
-                   <input type="text" className="w-full p-3 border rounded-xl" value={editingBlog.image} onChange={e => setEditingBlog({...editingBlog, image: e.target.value})} />
-                 </div>
-                 <div>
-                   <label className="block text-sm font-bold mb-2">Status</label>
-                   <select className="p-3 border rounded-xl" value={editingBlog.status} onChange={e => setEditingBlog({...editingBlog, status: e.target.value as any})}>
-                     <option value="Draft">Draft</option><option value="Published">Published</option>
-                   </select>
-                 </div>
-               </div>
-               <div className="pt-6 border-t flex gap-4">
-                 <button type="submit" className="bg-red-700 text-white px-10 py-3 rounded-xl font-bold">Save Article</button>
-                 <button type="button" onClick={() => setEditingBlog(null)} className="text-gray-500 font-bold">Cancel</button>
-               </div>
-             </form>
-          </div>
-        )}
-
-        {/* Keeping Products/Enquiries/Settings logic intact... */}
         {activeTab === 'enquiries' && (
           <div className="space-y-6">
             <h2 className="text-3xl font-bold text-gray-800">Business Enquiries & Leads</h2>
             <div className="grid grid-cols-1 gap-4">
-              {state.enquiries.map(enq => (
-                <div key={enq.id} className={`bg-white p-6 rounded-2xl shadow-sm border ${enq.status === 'New' ? 'border-red-200' : 'border-gray-200'}`}>
-                  <div className="flex justify-between items-start mb-4">
-                    <div>
-                      <div className="flex items-center gap-3 mb-1">
-                        <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${enq.type === 'B2B' ? 'bg-red-100 text-red-700' : 'bg-blue-100 text-blue-700'}`}>
-                          {enq.type}
-                        </span>
-                        <h4 className="text-lg font-bold text-gray-900">{enq.name}</h4>
-                      </div>
-                      <div className="flex items-center gap-4 text-sm text-gray-500">
-                        <span className="flex items-center gap-1"><Phone size={14}/> {enq.phone}</span>
-                        <span className="flex items-center gap-1"><Clock size={14}/> {new Date(enq.timestamp).toLocaleString()}</span>
-                      </div>
-                    </div>
-                    <div className="flex gap-2">
-                      <select 
-                        className="text-xs border rounded p-1"
-                        value={enq.status}
-                        onChange={(e) => updateEnquiryStatus(enq.id, e.target.value as any)}
-                      >
-                        <option value="New">New</option>
-                        <option value="Read">Mark as Read</option>
-                        <option value="Contacted">Contacted</option>
-                      </select>
-                      <button onClick={() => deleteEnquiry(enq.id)} className="p-1 text-red-400 hover:text-red-600"><Trash2 size={16}/></button>
-                    </div>
-                  </div>
-                  <div className="bg-gray-50 p-4 rounded-xl text-stone-700 text-sm whitespace-pre-wrap italic">
-                    "{enq.message}"
-                  </div>
+              {state.enquiries.length === 0 ? (
+                <div className="bg-white p-20 text-center rounded-3xl border border-gray-200">
+                   <MessageSquare className="mx-auto text-gray-200 mb-4" size={48} />
+                   <p className="text-gray-400">No enquiries yet.</p>
                 </div>
-              ))}
+              ) : (
+                state.enquiries.map(enq => (
+                  <div key={enq.id} className={`bg-white p-6 rounded-2xl shadow-sm border ${enq.status === 'New' ? 'border-red-200 ring-2 ring-red-50' : 'border-gray-200'}`}>
+                    <div className="flex justify-between items-start mb-4">
+                      <div className="flex-grow">
+                        <div className="flex items-center gap-3 mb-1">
+                          <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${enq.type === 'Product' ? 'bg-amber-100 text-amber-700' : enq.type === 'B2B' ? 'bg-red-100 text-red-700' : 'bg-blue-100 text-blue-700'}`}>
+                            {enq.type}
+                          </span>
+                          <h4 className="text-lg font-bold text-gray-900">{enq.name}</h4>
+                          {enq.productName && (
+                            <span className="flex items-center gap-1 text-[11px] font-bold text-gray-400 bg-gray-50 px-2 py-1 rounded-full uppercase">
+                               <ShoppingBag size={10} /> {enq.productName}
+                            </span>
+                          )}
+                        </div>
+                        <div className="flex items-center gap-6 text-sm text-gray-600">
+                          <span className="flex items-center gap-1.5 font-bold"><Phone size={14} className="text-red-700"/> {enq.phone}</span>
+                          <span className="flex items-center gap-1.5 opacity-60"><Clock size={14}/> {new Date(enq.timestamp).toLocaleString()}</span>
+                        </div>
+                      </div>
+                      <div className="flex gap-2 shrink-0">
+                        <select 
+                          className="text-xs border rounded-lg px-2 py-1.5 font-bold focus:ring-2 focus:ring-red-700 outline-none"
+                          value={enq.status}
+                          onChange={(e) => updateEnquiryStatus(enq.id, e.target.value as any)}
+                        >
+                          <option value="New">New</option>
+                          <option value="Read">Read</option>
+                          <option value="Contacted">Contacted</option>
+                        </select>
+                        <button onClick={() => { if(confirm('Delete enquiry?')) deleteEnquiry(enq.id) }} className="p-2 text-gray-300 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all"><Trash2 size={18}/></button>
+                      </div>
+                    </div>
+                    <div className="bg-stone-50 p-5 rounded-2xl text-stone-800 text-sm whitespace-pre-wrap relative border border-stone-100">
+                      <div className="text-stone-300 absolute -top-3 left-4 bg-stone-50 px-2 font-serif text-2xl">“</div>
+                      {enq.message}
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
           </div>
         )}
-        
+
         {activeTab === 'products' && !editingProduct && (
           <div className="space-y-6">
             <div className="flex justify-between items-center">
@@ -243,6 +180,38 @@ export const AdminDashboard = () => {
                       <td className="px-6 py-4 text-right space-x-2">
                         <button onClick={() => setEditingProduct(product)} className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg"><Edit3 size={18} /></button>
                         <button onClick={() => { if(confirm('Delete product?')) updateProducts(state.products.filter(p => p.id !== product.id)) }} className="p-2 text-red-600 hover:bg-red-50 rounded-lg"><Trash2 size={18} /></button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'blogs' && !editingBlog && (
+          <div className="space-y-6">
+            <div className="flex justify-between items-center">
+              <h2 className="text-3xl font-bold text-gray-800">Blog Engine</h2>
+              <button 
+                onClick={() => setEditingBlog({ id: 'new', title: '', slug: '', excerpt: '', content: '', image: '', date: '', author: 'Admin', category: 'Health', status: 'Draft' })}
+                className="bg-amber-600 text-white px-6 py-2 rounded-lg font-bold flex items-center gap-2"
+              >
+                <Plus size={20} /> Write Article
+              </button>
+            </div>
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+              <table className="w-full text-left">
+                <thead className="bg-gray-50"><tr><th className="px-6 py-4">Title</th><th className="px-6 py-4">Category</th><th className="px-6 py-4">Status</th><th className="px-6 py-4 text-right">Actions</th></tr></thead>
+                <tbody className="divide-y divide-gray-100">
+                  {state.blogs.map(post => (
+                    <tr key={post.id}>
+                      <td className="px-6 py-4"><span className="font-bold">{post.title}</span></td>
+                      <td className="px-6 py-4"><span className="px-2 py-1 bg-gray-100 rounded text-xs uppercase font-bold">{post.category}</span></td>
+                      <td className="px-6 py-4"><span className={`px-2 py-1 rounded text-xs font-bold ${post.status === 'Published' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'}`}>{post.status}</span></td>
+                      <td className="px-6 py-4 text-right space-x-2">
+                        <button onClick={() => setEditingBlog(post)} className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg"><Edit3 size={18} /></button>
+                        <button onClick={() => deleteBlog(post.id)} className="p-2 text-red-600 hover:bg-red-50 rounded-lg"><Trash2 size={18} /></button>
                       </td>
                     </tr>
                   ))}

@@ -6,6 +6,7 @@ import { Menu, X, Facebook, Instagram, Youtube, Phone, Mail, MapPin } from 'luci
 export const handleNavigate = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
   e.preventDefault();
   window.location.hash = href;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 
 export const Navbar = () => {

@@ -7,22 +7,32 @@ const API_BASE = 'http://localhost:3001/api';
 const INITIAL_STATE: CMSState = {
   products: [
     {
-      id: '1',
-      name: 'Curcuma Longa (Premium Turmeric)',
+      id: 'p1',
+      name: 'Premium Turmeric Powder',
       type: 'Powdered',
       description: 'High-curcumin turmeric sourced from the Sangli region. Known for its deep orange hue and potent anti-inflammatory properties.',
-      sizes: ['100g', '200g', '500g'],
+      sizes: ['100g', '250g', '500g'],
       image: 'https://images.unsplash.com/photo-1615485500704-8e990fdd904f?auto=format&fit=crop&q=80&w=1000',
       category: 'Ground Spices',
       isFeatured: true
     },
     {
-      id: '2',
-      name: 'Shahi Jeera (Caraway Seeds)',
+      id: 'p2',
+      name: 'Whole Cumin Seeds (Jeera)',
       type: 'Whole',
-      description: 'Earthy, nutty, and essential for digestion. Our Shahi Jeera is double-cleaned and retains maximum essential oils.',
-      sizes: ['50g', '100g'],
-      image: 'https://images.unsplash.com/photo-1593001872095-7d5b12877bc9?auto=format&fit=crop&q=80&w=1000',
+      description: 'Earthy, nutty, and essential for digestion. Our Jeera is double-cleaned and retains maximum essential oils.',
+      sizes: ['100g', '200g', '500g'],
+      image: 'https://images.unsplash.com/photo-1593001874117-c99c4ed6608c?auto=format&fit=crop&q=80&w=1000',
+      category: 'Whole Spices',
+      isFeatured: true
+    },
+    {
+      id: 'p3',
+      name: 'Aromatic Coriander Seeds',
+      type: 'Whole',
+      description: 'Handpicked sun-dried coriander seeds. A citrusy and earthy staple for every Indian household.',
+      sizes: ['100g', '250g', '500g'],
+      image: 'https://images.unsplash.com/photo-1533630669622-42103403f271?auto=format&fit=crop&q=80&w=1000',
       category: 'Whole Spices',
       isFeatured: true
     }
@@ -46,7 +56,7 @@ const INITIAL_STATE: CMSState = {
       slug: 'cumin-digestion-benefits',
       excerpt: 'From bloating relief to metabolism boosting, Cumin (Jeera) is the unsung hero of the Indian spice box.',
       content: 'Cumin seeds contain naturally occurring substances that work as antioxidants. It helps in the secretion of digestive enzymes, which accelerates the digestion process. It is also a rich source of iron, making it essential for energy levels.',
-      image: 'https://images.unsplash.com/photo-1626132647523-66f5bf380027?auto=format&fit=crop&q=80&w=1000',
+      image: 'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=1000',
       date: new Date().toISOString(),
       author: 'Deccan Kitchen',
       category: 'Wellness',
