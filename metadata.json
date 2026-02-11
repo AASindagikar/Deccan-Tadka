@@ -1,0 +1,7 @@
+{
+  "name": "Deccan Tadka - Premium Indian Spices",
+  "description": "Professional FMCG website and CMS for Deccan Tadka, a premium Indian raw masala and spices brand featuring product management, blog engine, and dynamic customization.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
