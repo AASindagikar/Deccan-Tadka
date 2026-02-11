@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { useCMS } from '../store';
-import { CheckCircle, Truck, ShieldCheck, Award, ArrowRight } from 'lucide-react';
+import { CheckCircle, Truck, ShieldCheck, Award, ArrowRight, HeartPulse, Brain, Zap } from 'lucide-react';
 import { handleNavigate } from '../components/Layout';
 
 export const Home = () => {
@@ -42,6 +42,38 @@ export const Home = () => {
             >
               B2B / Distributor Query
             </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Science of Spices - Interactive Health Section */}
+      <section className="max-w-7xl mx-auto px-4">
+        <div className="bg-white rounded-[3rem] p-12 shadow-sm border border-stone-100">
+          <div className="flex flex-col md:flex-row items-end justify-between mb-12 gap-6">
+            <div className="max-w-xl">
+              <h2 className="text-4xl font-bold text-stone-900 mb-4">The Science of Spices</h2>
+              <p className="text-stone-500">Ancient wisdom meets modern medicine. Learn how our pure spices contribute to your daily wellness.</p>
+            </div>
+            <a href="#/blog" onClick={(e) => handleNavigate(e, '#/blog')} className="text-red-700 font-bold flex items-center gap-2 hover:gap-4 transition-all">
+              Visit Wellness Blog <ArrowRight size={20} />
+            </a>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="group p-8 rounded-[2rem] bg-red-50 hover:bg-red-700 hover:text-white transition-all duration-500 cursor-pointer" onClick={(e) => { e.preventDefault(); window.location.hash = '#/blog'; }}>
+              <HeartPulse size={40} className="text-red-700 group-hover:text-white mb-6 transition-colors" />
+              <h4 className="text-xl font-bold mb-3">Anti-Inflammatory</h4>
+              <p className="text-stone-600 group-hover:text-red-50 text-sm leading-relaxed">Turmeric and Black Pepper work together to reduce chronic inflammation naturally.</p>
+            </div>
+            <div className="group p-8 rounded-[2rem] bg-amber-50 hover:bg-amber-600 hover:text-white transition-all duration-500 cursor-pointer" onClick={(e) => { e.preventDefault(); window.location.hash = '#/blog'; }}>
+              <Zap size={40} className="text-amber-600 group-hover:text-white mb-6 transition-colors" />
+              <h4 className="text-xl font-bold mb-3">Metabolism Boost</h4>
+              <p className="text-stone-600 group-hover:text-amber-50 text-sm leading-relaxed">Cumin seeds accelerate digestion and improve your body's nutrient absorption rate.</p>
+            </div>
+            <div className="group p-8 rounded-[2rem] bg-stone-100 hover:bg-stone-900 hover:text-white transition-all duration-500 cursor-pointer" onClick={(e) => { e.preventDefault(); window.location.hash = '#/blog'; }}>
+              <Brain size={40} className="text-stone-700 group-hover:text-white mb-6 transition-colors" />
+              <h4 className="text-xl font-bold mb-3">Cognitive Health</h4>
+              <p className="text-stone-600 group-hover:text-stone-200 text-sm leading-relaxed">Antioxidants in whole spices protect your brain cells from daily oxidative stress.</p>
+            </div>
           </div>
         </div>
       </section>
